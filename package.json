@@ -1,0 +1,48 @@
+{
+  "name": "mlc25-su",
+  "version": "0.0.1",
+  "type": "module",
+  "keywords": [
+    "slidev-theme",
+    "slidev",
+    "HEP"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:AvencastF/slidev-theme-hep.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "slidev": ">=0.47.0"
+  },
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export",
+    "screenshot": "slidev export --format png --output screenshot"
+  },
+  "dependencies": {
+    "@slidev/types": "^v51.8.0",
+    "@slidev/cli": "^v51.8.0",
+    "codemirror-theme-vars": "^0.1.2",
+    "plotly.js-dist": "^3.0.1",
+    "prism-theme-vars": "^0.2.5"
+  },
+  "//": "Learn more: https://sli.dev/themes/write-a-theme.html",
+  "slidev": {
+    "colorSchema": "dark",
+    "highlighter": "all",
+    "defaults": {
+      "aspectRatio": "16/9",
+      "canvasWidth": 1280,
+      "fonts": {
+        "mono": "Fira Code",
+        "sans": "Didact Gothic",
+        "local": "Didact Gothic"
+      }
+    }
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.42.0"
+  }
+}
