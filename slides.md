@@ -1,5 +1,6 @@
 ---
 theme: ./
+transition: fade
 layout: cover
 class: text-left
 # backgroud: '/ATLAS/ATLAS-Logo.png'
@@ -7,17 +8,12 @@ authors:  # First author should be the presenter
   - Andrija Sagić: ["'Milutin Bojic' Library", "Europeana"]
 meeting: "MLC 25 - Su"
 preTitle: "Local AI Agent on Serbian"
-aspectRatio: 16/9
 ---
 
-<!-- <br>
-<p style="color:#0FA3B1;">Don't explicitly put title on cover page 🥳 </p>
-<p style="color:#0FA3B1;">Put your own logo somewhere </p> -->
-
-<img id="ATLAS" src="/ml-konferencija-logo-light.svg"> </img>
+<img id="mlc" src="/ml-konferencija-logo-light.svg"> </img>
 
 <style scoped>
-#ATLAS {
+#mlc {
   width: 180px;
   position: absolute;
   right: 3%;
@@ -122,52 +118,43 @@ Example of Agno AGI use
 
 ````md magic-move
 ```python
-searcher = Agent(
-    model=Ollama(id=gemma3:4b-it-qat, client=OllamaClient(host=http://localhot:11434/v1)),
-    name="Searcher",
-    role="Searches the top URLs for a topic",
+reasoning_agent = Agent(
+    name="Reasoning Agent",
+    model=Ollama(id="qwen3:latest"),
+    reasoning=True,
+    tools=[ReasoningTools(add_instructions=True)],
     instructions=[
-        "Given a topic, first generate a list of 3 search terms related to that topic.",
-        "For each search term, search the web and analyze the results.Return the 10 most relevant URLs to the topic.",
-        "You are writing for the New York Times, so the quality of the sources is important.",
-    ],
-    tools=[DuckDuckGoTools()],
-    save_response_to_file=str(urls_file),
+        "Always use tables to display data."
+        "Answer always on Serbian language."
+        ],
+    storage=SqliteStorage(
+        table_name="reasoning_agent",
+        db_file=agent_storage,
+        auto_upgrade_schema=True,
+        ),
     add_datetime_to_instructions=True,
+    add_history_to_messages=True,
+    num_history_responses=5,
+    markdown=True,
 )
 ```
 ```python
-writer = Agent(
-    model=Ollama(id=qwen3:latest, client=OllamaClient(host=http://localhot:11434/v1)),
-    name="Writer",
-    role="Writes a high-quality article",
-    description=(
-        "You are a senior writer for the New York Times. Given a topic and a list of URLs, "
-        "your goal is to write a high-quality NYT-worthy article on the topic."
-    ),
+arxiv_agent = Agent(
+    name="Arxiv Agent",
+    model=Ollama(id="qwen3:latest"),
+    tools=[ArxivTools()],
     instructions=[
-        f"First read all urls in {urls_file.name} using `get_article_text`."
-        "Then write a high-quality NYT-worthy article on the topic."
-        "The article should be well-structured, informative, engaging and catchy.",
-        "Ensure the length is at least as long as a NYT cover story -- at a minimum, 15 paragraphs.",
-        "Ensure you provide a nuanced and balanced opinion, quoting facts where possible.",
-        "Focus on clarity, coherence, and overall quality.",
-        "Never make up facts or plagiarize. Always provide proper attribution.",
-        "Remember: you are writing for the New York Times, so the quality of the article is important.",
-    ],
-    tools=[Newspaper4kTools(), FileTools(base_dir=urls_file.parent)],
+        "Always use tables to display data and cite arxiv sources."
+        "Odgovori uvek na srpskom jeziku."
+        ],
+    storage=SqliteStorage(table_name="arxiv_agent", db_file=agent_storage),
     add_datetime_to_instructions=True,
-)
+    add_history_to_messages=True,
+    num_history_responses=5,
+    markdown=True,
 ```
 ````
 
----
-layout: pageBar
----
-
-# Smolagents 
-
-Example of HF Smolagents use
 
 ---
 layout: pageBar
@@ -271,56 +258,64 @@ layout: pageBar
 
 Improve Serbian support
 
-## Fine tune
+One of the possible solutions is <span v-mark.underline.blue>fine tuning</span> to improve LLM support for Serbian.
+
+<div v-click>
 
 * Datasets ?
-*
+* Models
+* Methods
+* Hardware
+
+</div>
+<div v-click class="m4">
+
+### Testing
+
+</div>
+<div v-click>
+Testing the Gemma3-4b model with synthetic instruct dataset (Q/A) on Serbian, resulted with this model:
+</div>
+<div v-click>
+<a href="https://huggingface.co/Sagicc/gemma-3-4b-it-sr" target="_blank">huggingface.co/Sagicc/gemma-3-4b-it-sr</a>
+</div>
+
+<div v-click class="m4">
+
+### Problems
+
+</div>
+<div v-click>
+
+* lose Agent use option
+* short answers
+
+</div>
 
 ---
 layout: pageBar
 ---
 
-# 2-D Plotly Examples
+# Next
 
-Two 2D plots for display
+Further development
 
-Try to interact with the graphs 🥰
+<div v-click>
 
-<div grid="~ cols-2 gap-20">
-
-<Transform :scale="0.75">
-<PlotlyGraph filePath="Graph/plotly1.json" tickFontSize="18" graphWidth="800"/>
-</Transform>
-
-<Transform :scale="0.75">
-<PlotlyGraph filePath="Graph/plotly1.json" tickFontSize="18" graphWidth="800"/>
-</Transform>
+<img src="/2phis.svg" width=150px>
 
 </div>
 
+<div v-click class="m4">
 
----
-layout: pageBar
----
+### SLM Lab
 
-# 3-D Plotly Examples
-
-Two 3D plots for display
-
-Try to interact with the graphs 🥰
-
-<div grid="~ cols-2 gap-20">
-
-<Transform :scale="0.65">
-<PlotlyGraph filePath="Graph/plotly2.json" graphWidth="900"/>
-</Transform>
-
-<Transform :scale="0.65">
-<PlotlyGraph filePath="Graph/plotly3.json" graphWidth="900"/>
-</Transform>
+* Improve support for Serbian
+* Create a datasets
+* Lower token generation for Reasoning but with better results
+* Experiment with new discoveries  
 
 </div>
-
 
 ---
 layout: center
@@ -332,8 +327,3 @@ class: "text-center"
 [mail](mailto:andrija.sagic@gmail.com) 
 
 <!-- / [GitHub Repo](https://github.com/2phis) -->
-
-
----
-layout: pageBar
----
