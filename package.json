@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com:AvencastF/slidev-theme-hep.git"
+    "url": "https://github.com/2phis/mlc25-su.git"
   },
   "engines": {
     "node": ">=18.0.0",
