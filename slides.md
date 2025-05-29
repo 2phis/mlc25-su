@@ -79,6 +79,12 @@ Some of Open Source AI Agent that support local deployment
         <td><img src="/praisonai.png" alt="Agent Development Kit (ADK)" width=120px float="left"></td>
         <td><a href="https://github.com/MervinPraison/PraisonAI" target="_blank">github.com/MervinPraison/PraisonAI</a></td>
   </tr>
+  <tr>
+        <td><img src="/camel.svg" alt="CamelAI" width=200px float="left"></td>
+        <td><a href="https://github.com/camel-ai/camel" target="_blank">github.com/camel-ai/camel</a></td>
+        <td><img src="/microsoft.svg" alt="AutoGen" width=60px float="left"></td>
+        <td><a href="https://github.com/microsoft/autogen" target="_blank">github.com/microsoft/autogen</a></td>
+  </tr>
 </table>
 
 ---
@@ -141,7 +147,7 @@ reasoning_agent = Agent(
 ```python
 arxiv_agent = Agent(
     name="Arxiv Agent",
-    model=Ollama(id="qwen3:latest"),
+    model=Ollama(id="gemma3:4b-it-qat"),
     tools=[ArxivTools()],
     instructions=[
         "Always use tables to display data and cite arxiv sources."
@@ -318,12 +324,14 @@ Further development
 </div>
 
 ---
-layout: center
+layout: image-left
 class: "text-center"
+image: /qr-code.png
+backgroundSize: 40% 
 ---
 
 # Thank you
 
-[mail](mailto:andrija.sagic@gmail.com) 
+<img src="/license_to_call.png" alt="end" width=80%>
 
-<!-- / [GitHub Repo](https://github.com/2phis) -->
+[mail](mailto:andrija.sagic@gmail.com) / [Slides](https://2phis.github.io/mlc25-su)
