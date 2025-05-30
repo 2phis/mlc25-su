@@ -161,6 +161,34 @@ arxiv_agent = Agent(
 ```
 ````
 
+---
+layout: pageBar
+---
+
+# How to build your local AI Agent?
+
+Steps to consider
+
+```mermaid
+flowchart LR
+ subgraph s1["Agent"]
+        n1["Tools"]
+        n2["GUI"]
+  end
+    A["Task"] --> B{"Infrastucture"}
+    B --> C["GPU"] & D["System"]
+    C --> E["Model Size"]
+    D --> F["LLM Server"]
+    E --> G(("AI Agent Framework"))
+    F --> G
+    G --> s1
+    I["Linux, Win, iOS"] --> D
+    J["Ollama"] --> F
+    K["CPU, RAM, SSD..."] --> D
+```
+
+### Example
+<a href="https://docs.praison.ai/ui/streamlit/ollama-streamlit" target="_blank">docs.praison.ai/ui/streamlit/ollama-streamlit</a>
 
 ---
 layout: pageBar
